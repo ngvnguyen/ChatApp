@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ChatApp</string>
+    <string name="welcome_to_chat_app">Chào mừng đến với Chat App</string>
+    <string name="login_to_continue">Đăng nhập để tiếp tục</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="login_with">Đăng nhập với</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="login_successfully">Đăng nhập thành công</string>
+    <string name="login_failed">Đăng nhập thất bại</string>
+    <string name="login_cancelled">Đăng nhập đã hủy bỏ</string>
+    <string name="repeat_password">Nhập lại mật khẩu</string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="the_repeat_password_is_incorrect">Mật khẩu nhập lại không khớp</string>
+    <string name="account_created_successfully">Tạo tài khoản thành công</string>
+    <string name="failed_to_create_account">Tạo tài khoản thất bại</string>
+    <string name="message">Tin nhắn</string>
+    <string name="settings">Cài đặt</string>
+    <string name="please_enter_valid_email">Vui lòng nhập email hợp lệ</string>
+    <string name="conversation">Đoạn chat</string>
+    <string name="no_name">Không tên</string>
+    <string name="network_unavailable">Mạng không khả dụng</string>
+    <string name="no_internet_connection">Không có kết nối mạng</string>
+    <string name="internet_connection_restored">Kết nối mạng đã được khôi phục</string>
+    <string name="how_can_i_help_you">Bạn cần giúp đỡ gì?</string>
+    <string name="failed_to_send_message">Gửi tin nhắn thất bại</string>
+    <string name="english">Tiếng Anh</string>
+    <string name="vietnam">Tiếng Việt</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="change_language">Thay đổi ngôn ngữ</string>
+    <string name="default_">Mặc định</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="theme">Chủ đề</string>
+    <string name="change_theme">Thay đổi chủ đề</string>
+    <string name="light">Sáng</string>
+    <string name="dark">Tối</string>
+    <string name="medium_light_contrast">Sáng tương phản trung bình</string>
+    <string name="high_light_contrast">Sáng tương phản cao</string>
+    <string name="medium_dark_contrast">Tối tương phản trung bình</string>
+    <string name="high_dark_contrast">Tối tương phản cao</string>
+    <string name="green_light">Xanh(Sáng)</string>
+    <string name="green_dark">Xanh(tối)</string>
+
+</resources>

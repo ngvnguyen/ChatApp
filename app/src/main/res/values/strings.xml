@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">ChatApp</string>
+    <string name="welcome_to_chat_app">Welcome to Chat App</string>
+    <string name="login_to_continue">Login to continue</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="login_with">Login with</string>
+    <string name="sign_up">Sign up</string>
+    <string name="login_successfully">Login successfully</string>
+    <string name="login_failed">Login failed</string>
+    <string name="login_cancelled">Login cancelled</string>
+    <string name="repeat_password">Repeat your password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="the_repeat_password_is_incorrect">The repeat password is incorrect</string>
+    <string name="account_created_successfully">Account created successfully</string>
+    <string name="failed_to_create_account">Failed to create account</string>
+    <string name="message">Message</string>
+    <string name="settings">Settings</string>
+    <string name="chat_bot" translatable="false">ChatBot</string>
+    <string name="please_enter_valid_email">Please enter valid email</string>
+    <string name="conversation">Conversation</string>
+    <string name="no_name">No name</string>
+    <string name="network_unavailable">Network unavailable</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="internet_connection_restored">Internet connection restored</string>
+    <string name="how_can_i_help_you">How can I help you?</string>
+    <string name="failed_to_send_message">Failed to send message</string>
+    <string name="english">English</string>
+    <string name="vietnam">Vietnam</string>
+    <string name="language">Language</string>
+    <string name="change_language">Change language</string>
+    <string name="default_">Default</string>
+    <string name="logout">Logout</string>
+    <string name="theme">Theme</string>
+    <string name="change_theme">Change theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="medium_light_contrast">Medium contrast light</string>
+    <string name="high_light_contrast">High contrast light</string>
+    <string name="medium_dark_contrast">Medium contrast dark</string>
+    <string name="high_dark_contrast">High contrast dark</string>
+    <string name="green_light">Green(light)</string>
+    <string name="green_dark">Green(dark)</string>
+</resources>
