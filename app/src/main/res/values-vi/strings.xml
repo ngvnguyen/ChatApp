@@ -42,5 +42,9 @@
     <string name="high_dark_contrast">Tối tương phản cao</string>
     <string name="green_light">Xanh(Sáng)</string>
     <string name="green_dark">Xanh(tối)</string>
-
+    <string name="purple_light">Tím(sáng)</string>
+    <string name="purple_dark">Tím(tối)</string>
+    <string name="background">Nền</string>
+    <string name="select_background_for_your_app">Chọn nền cho ứng dụng của bạn</string>
+    <string name="press_back_again_to_exit_app">Quay lại lần nữa để thoát ứng dụng</string>
 </resources>

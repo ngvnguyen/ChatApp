@@ -1,16 +1,21 @@
 package com.sf.chatapp.ui.theme
 import android.app.Activity
 import android.content.Context
+import android.net.Uri
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.sf.chatapp.R
@@ -96,7 +101,7 @@ private val darkDefaultScheme = darkColorScheme(
 )
 
 private val greenLightScheme = lightColorScheme(
-    primary = Color(0xFF37693D),
+    primary = Color(0xFF45D958),
     onPrimary = Color(0xFFFFFFFF),
     primaryContainer = Color(0xFFB9F0B8),
     onPrimaryContainer = Color(0xFF1F5027),
@@ -134,7 +139,7 @@ private val greenLightScheme = lightColorScheme(
 )
 
 private val greenDarkScheme = darkColorScheme(
-    primary = Color(0xFF9DD49E),
+    primary = Color(0xFF40FA43),
     onPrimary = Color(0xFF033912),
     primaryContainer = Color(0xFF1F5027),
     onPrimaryContainer = Color(0xFFB9F0B8),
@@ -171,6 +176,83 @@ private val greenDarkScheme = darkColorScheme(
     surfaceContainerHighest = Color(0xFF313630)
 )
 
+private val purpleLightScheme = lightColorScheme(
+    primary = Color(0xFF8E2EEE),
+    onPrimary = Color(0xFFFFFFFF),
+    primaryContainer = Color(0xFFEFDBFF),
+    onPrimaryContainer = Color(0xFF553B71),
+    secondary = Color(0xFF655A6F),
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = Color(0xFFEDDDF6),
+    onSecondaryContainer = Color(0xFF4D4357),
+    tertiary = Color(0xFF805158),
+    onTertiary = Color(0xFFFFFFFF),
+    tertiaryContainer = Color(0xFFFFD9DD),
+    onTertiaryContainer = Color(0xFF653A41),
+    error = Color(0xFFBA1A1A),
+    onError = Color(0xFFFFFFFF),
+    errorContainer = Color(0xFFFFDAD6),
+    onErrorContainer = Color(0xFF93000A),
+    background = Color(0xFFFFF7FF),
+    onBackground = Color(0xFF1E1A20),
+    surface = Color(0xFFFFF7FF),
+    onSurface = Color(0xFF1E1A20),
+    surfaceVariant = Color(0xFFE9DFEB),
+    onSurfaceVariant = Color(0xFF4A454E),
+    outline = Color(0xFF7B757E),
+    outlineVariant = Color(0xFFCCC4CE),
+    scrim = Color(0xFF000000),
+    inverseSurface = Color(0xFF332F35),
+    inverseOnSurface = Color(0xFFF6EEF6),
+    inversePrimary = Color(0xFFDAB9F9),
+    surfaceDim = Color(0xFFDFD8DF),
+    surfaceBright = Color(0xFFFFF7FF),
+    surfaceContainerLowest = Color(0xFFFFFFFF),
+    surfaceContainerLow = Color(0xFFF9F1F9),
+    surfaceContainer = Color(0xFFF3EBF3),
+    surfaceContainerHigh = Color(0xFFEEE6EE),
+    surfaceContainerHighest = Color(0xFFE8E0E8)
+)
+
+
+private val purpleDarkScheme = darkColorScheme(
+    primary = Color(0xFF9225F6),
+    onPrimary = Color(0xFF3E2459),
+    primaryContainer = Color(0xFF553B71),
+    onPrimaryContainer = Color(0xFFEFDBFF),
+    secondary = Color(0xFFD0C1DA),
+    onSecondary = Color(0xFF362C3F),
+    secondaryContainer = Color(0xFF4D4357),
+    onSecondaryContainer = Color(0xFFEDDDF6),
+    tertiary = Color(0xFFF3B7BE),
+    onTertiary = Color(0xFF4B252B),
+    tertiaryContainer = Color(0xFF653A41),
+    onTertiaryContainer = Color(0xFFFFD9DD),
+    error = Color(0xFFFFB4AB),
+    onError = Color(0xFF690005),
+    errorContainer = Color(0xFF93000A),
+    onErrorContainer = Color(0xFFFFDAD6),
+    background = Color(0xFF151218),
+    onBackground = Color(0xFFE8E0E8),
+    surface = Color(0xFF151218),
+    onSurface = Color(0xFFE8E0E8),
+    surfaceVariant = Color(0xFF4A454E),
+    onSurfaceVariant = Color(0xFFCCC4CE),
+    outline = Color(0xFF968E98),
+    outlineVariant = Color(0xFF4A454E),
+    scrim = Color(0xFF000000),
+    inverseSurface = Color(0xFFE8E0E8),
+    inverseOnSurface = Color(0xFF332F35),
+    inversePrimary = Color(0xFF6E528A),
+    surfaceDim = Color(0xFF151218),
+    surfaceBright = Color(0xFF3C383E),
+    surfaceContainerLowest = Color(0xFF100D12),
+    surfaceContainerLow = Color(0xFF1E1A20),
+    surfaceContainer = Color(0xFF221E24),
+    surfaceContainerHigh = Color(0xFF2C292E),
+    surfaceContainerHighest = Color(0xFF373339)
+)
+
 private val lightDefaultTheme = ColorSchemeState(
     id = 1,
     name = R.string.light,
@@ -195,11 +277,25 @@ private val greenDarkTheme = ColorSchemeState(
     colorScheme = greenDarkScheme
 )
 
+private val purpleLightTheme = ColorSchemeState(
+    id = 5,
+    name = R.string.purple_light,
+    colorScheme = purpleLightScheme
+)
+
+private val purpleDarkTheme = ColorSchemeState(
+    id = 6,
+    name = R.string.purple_dark,
+    colorScheme = purpleDarkScheme
+)
+
 val themes = mapOf(
     lightDefaultTheme.id to lightDefaultTheme,
     darkDefaultTheme.id to darkDefaultTheme,
     greenLightTheme.id to greenLightTheme,
-    greenDarkTheme.id to greenDarkTheme
+    greenDarkTheme.id to greenDarkTheme,
+    purpleLightTheme.id to purpleLightTheme,
+    purpleDarkTheme.id to purpleDarkTheme
 )
 
 @Composable
@@ -213,16 +309,20 @@ fun ChatAppTheme(
     ) }
 
 
-
     val toastManager = ToastManager(LocalContext.current)
     CompositionLocalProvider(
         LocalToastManager provides toastManager,
         LocalColorSchemeState provides colorSchemeState
     ) {
-        WrapperTheme(
-            colorScheme = LocalColorSchemeState.current.value.colorScheme,
-            content = content
-        )
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            WrapperTheme(
+                colorScheme = LocalColorSchemeState.current.value.colorScheme,
+                content = content
+            )
+        }
+
     }
 
 

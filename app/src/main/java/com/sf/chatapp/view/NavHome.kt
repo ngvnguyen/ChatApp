@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
@@ -24,14 +25,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -42,17 +47,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.sf.chatapp.R
 import com.sf.chatapp.utils.LocalToastManager
 import com.sf.chatapp.view.settings.settingScreen
-
-
-//enum class Screen(@DrawableRes val iconRes:Int,@StringRes val iconName:Int){
-//    MESSAGE(R.drawable.chat,R.string.message),
-//    CHATBOT(R.drawable.robot,R.string.chat_bot),
-//    SETTINGS(R.drawable.settings,R.string.settings)
-//}
 
 
 sealed class Screen(
@@ -72,6 +73,7 @@ sealed class Screen(
 
     companion object {
         val navigationItems: List<Screen> = listOf(Message, ChatBot, Settings)
+        val hideNavigationBarItem :List<Screen> = listOf()
     }
 }
 
@@ -81,17 +83,26 @@ fun NavHome(
 ){
     var tapCounter by remember { mutableIntStateOf(0) }
     val activity = LocalActivity.current
+    val context = LocalContext.current
     val toastManager = LocalToastManager.current
     val onBackPressed = @Composable {BackHandler {
         tapCounter++
         if(tapCounter==2) {
             activity?.moveTaskToBack(true)
-        }else toastManager.showInfoToast("Press back again to exit app")
+            tapCounter = 0
+        }else {
+            toastManager.showInfoToast(context.getString(R.string.press_back_again_to_exit_app))
+        }
     }}
 
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController) },
+        bottomBar = {
+            if (currentRoute !in Screen.hideNavigationBarItem.map { it.route })
+                BottomNavigationBar(navController)
+        },
         modifier = modifier
     ) { innerPadding->
         NavHost(
@@ -109,7 +120,7 @@ fun NavHome(
                 )
             }
 
-            settingScreen(navController)
+            settingScreen(navController,onBackPressed)
         }
 
     }
@@ -125,6 +136,7 @@ fun BottomNavigationBar(navController: NavController,modifier: Modifier = Modifi
     }
 
     var selectedIndex by remember { mutableIntStateOf(0) }
+
     Column(modifier = modifier.fillMaxWidth()) {
         NavigationBar(
             modifier = Modifier
@@ -177,10 +189,10 @@ fun BottomNavigationBar(navController: NavController,modifier: Modifier = Modifi
 
 }
 
-@Composable
-fun ChangeGestureNavColor(){
-    val act = LocalActivity.current
-    SideEffect {
-        act?.window?.navigationBarColor = Color.Transparent.toArgb()
-    }
-}
+//@Composable
+//fun ChangeGestureNavColor(){
+//    val act = LocalActivity.current
+//    SideEffect {
+//        act?.window?.navigationBarColor = Color.Transparent.toArgb()
+//    }
+//}

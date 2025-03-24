@@ -10,13 +10,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 class RetrofitInstance {
-    val httpInterceptor = HttpLoggingInterceptor().apply {
+    private val httpInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
-    val httpClient = OkHttpClient.Builder()
+    private val httpClient = OkHttpClient.Builder()
         .addInterceptor(httpInterceptor)
         .build()
-    val json = Json{
+    private val json = Json{
         ignoreUnknownKeys = true
         encodeDefaults = true
     }

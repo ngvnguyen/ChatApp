@@ -63,10 +63,9 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.firestore.ktx)
-    implementation(libs.play.services.ads)
-
 
     implementation(libs.coil)
+    implementation(libs.coil.compose)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.koin.core)
     implementation(libs.koin.android)

@@ -1,7 +1,7 @@
 package com.sf.chatapp.ui.theme
 import androidx.compose.ui.graphics.Color
 
-val primaryLight = Color(0xFF006874)
+val primaryLight = Color(0xFF1CB7C7)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF9EEFFD)
 val onPrimaryContainerLight = Color(0xFF004F58)
@@ -37,7 +37,7 @@ val surfaceContainerLight = Color(0xFFE9EFF0)
 val surfaceContainerHighLight = Color(0xFFE3E9EA)
 val surfaceContainerHighestLight = Color(0xFFDEE3E5)
 
-val primaryDark = Color(0xFF82D3E0)
+val primaryDark = Color(0xFF33E2FD)
 val onPrimaryDark = Color(0xFF00363D)
 val primaryContainerDark = Color(0xFF004F58)
 val onPrimaryContainerDark = Color(0xFF9EEFFD)

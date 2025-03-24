@@ -2,6 +2,7 @@ package com.sf.chatapp.view
 
 import android.content.Context
 import android.util.Log
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -12,11 +13,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -86,58 +91,77 @@ fun AppLogin(
     }
 
     var isLogin by remember { mutableStateOf(true) }
-    Box(modifier = modifier.fillMaxSize()){
-        Column(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(R.mipmap.ic_launcher_foreground),
-                contentDescription = null,
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 24.dp)
-            )
 
+    Column(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(R.mipmap.ic_launcher_foreground),
+            contentDescription = null,
+            modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 24.dp)
+        )
+
+        Text(
+            text = stringResource(R.string.welcome_to_chat_app),
+            fontSize = 24.sp,
+            modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 4.dp))
+
+        Text(
+            text = if(isLogin) stringResource(R.string.login_to_continue) else stringResource(R.string.sign_up),
+            modifier = Modifier.align(Alignment.CenterHorizontally).padding(top =2.dp))
+
+
+        Text(
+            text = stringResource(R.string.email),
+            fontSize = 24.sp,
+            modifier = Modifier.padding(start = 24.dp,end = 24.dp , top = 80.dp)
+        )
+        TextFieldView(
+            value = account.email,
+            onValueChange = {
+                account = account.copy(email = it)
+                isEmailValid = gmailPattern.matcher(account.email).matches()
+            },
+            placeholder = "abc@gmail.com",
+            maxLines = 1,
+            textStyle = TextStyle(color = Color.Gray, fontSize = 18.sp),
+            modifier = Modifier.heightIn(min = 40.dp)
+                .fillMaxWidth().padding(start = 24.dp,end = 24.dp,top = 12.dp),
+            supportMatch = {
+                if(!isEmailValid && account.email.isNotEmpty()) Text(
+                    stringResource(R.string.please_enter_valid_email),
+                    fontSize = 8.sp,
+                    color = Color.Red
+                )
+            }
+        )
+
+        Text(
+            text = stringResource(R.string.password),
+            fontSize = 24.sp,
+            modifier = Modifier.padding(start = 24.dp,end = 24.dp , top = 40.dp)
+        )
+        TextFieldView(
+            value = account.password,
+            onValueChange = {
+                account = account.copy(password = it)
+            },
+            placeholder = "********",
+            maxLines = 1,
+            textStyle = TextStyle(color = Color.Gray, fontSize = 18.sp),
+            modifier = Modifier.heightIn(min = 40.dp)
+                .fillMaxWidth().padding(start = 24.dp,end = 24.dp,top = 12.dp),
+            isPassword = true
+        )
+
+        if (isLogin.not()){
             Text(
-                text = stringResource(R.string.welcome_to_chat_app),
-                fontSize = 24.sp,
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 4.dp))
-
-            Text(
-                text = if(isLogin) stringResource(R.string.login_to_continue) else stringResource(R.string.sign_up),
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top =2.dp))
-
-
-            Text(
-                text = stringResource(R.string.email),
-                fontSize = 24.sp,
-                modifier = Modifier.padding(start = 24.dp,end = 24.dp , top = 80.dp)
-            )
-            TextFieldView(
-                value = account.email,
-                onValueChange = {
-                    account = account.copy(email = it)
-                    isEmailValid = gmailPattern.matcher(account.email).matches()
-                },
-                placeholder = "abc@gmail.com",
-                maxLines = 1,
-                textStyle = TextStyle(color = Color.Gray, fontSize = 18.sp),
-                modifier = Modifier.heightIn(min = 40.dp)
-                    .fillMaxWidth().padding(start = 24.dp,end = 24.dp,top = 12.dp),
-                supportMatch = {
-                    if(!isEmailValid && account.email.isNotEmpty()) Text(
-                        stringResource(R.string.please_enter_valid_email),
-                        fontSize = 8.sp,
-                        color = Color.Red
-                    )
-                }
-            )
-
-            Text(
-                text = stringResource(R.string.password),
+                text = stringResource(R.string.repeat_password),
                 fontSize = 24.sp,
                 modifier = Modifier.padding(start = 24.dp,end = 24.dp , top = 40.dp)
             )
             TextFieldView(
-                value = account.password,
+                value = repeatPassword,
                 onValueChange = {
-                    account = account.copy(password = it)
+                    repeatPassword = it
                 },
                 placeholder = "********",
                 maxLines = 1,
@@ -146,81 +170,89 @@ fun AppLogin(
                     .fillMaxWidth().padding(start = 24.dp,end = 24.dp,top = 12.dp),
                 isPassword = true
             )
-
-            if (isLogin.not()){
-                Text(
-                    text = stringResource(R.string.repeat_password),
-                    fontSize = 24.sp,
-                    modifier = Modifier.padding(start = 24.dp,end = 24.dp , top = 40.dp)
-                )
-                TextFieldView(
-                    value = repeatPassword,
-                    onValueChange = {
-                        repeatPassword = it
-                    },
-                    placeholder = "********",
-                    maxLines = 1,
-                    textStyle = TextStyle(color = Color.Gray, fontSize = 18.sp),
-                    modifier = Modifier.heightIn(min = 40.dp)
-                        .fillMaxWidth().padding(start = 24.dp,end = 24.dp,top = 12.dp),
-                    isPassword = true
-                )
-            }else repeatPassword = ""
+        }else repeatPassword = ""
 
 
-            Spacer(modifier = Modifier.weight(1f))
-            OutlinedButton(
-                onClick = {
-                    if (isLogin){
-                        if (checkInput(account,gmailPattern))
-                            login(firebaseAuth,account,toastManager,context,onLoginSuccessful)
-                    }
-                    else{
-                        if (account.password == repeatPassword) registerAccount(firebaseAuth,account,context,toastManager)
-                            else toastManager.showErrorToast(context.getString(R.string.the_repeat_password_is_incorrect))
-                    }},
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-                    .padding(bottom = 12.dp)
-            ) {
-                Text(
-                    text = if(isLogin)stringResource(R.string.login) else stringResource(R.string.sign_up),
-                    fontSize = 18.sp)
-            }
-            Row(modifier = Modifier.align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)){
-                Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(R.string.login_with)+" ")
-                        withStyle(style = SpanStyle(color = Color.Green)){
-                            append("Google")
-                        }},
-                    modifier = Modifier.clickable {
-                        loginWithGoogle(
-                            firebaseAuth,
-                            context,
-                            scope,
-                            toastManager,
-                            onLoginSuccessful
-                        )
-                    }
-                )
-
-            }
-
+        Spacer(modifier = Modifier.weight(1f))
+        OutlinedButton(
+            onClick = {
+                if (isLogin){
+                    if (checkInput(account,gmailPattern))
+                        login(firebaseAuth,account,toastManager,context,onLoginSuccessful)
+                }
+                else{
+                    if (account.password == repeatPassword) registerAccount(firebaseAuth,account,context,toastManager)
+                        else toastManager.showErrorToast(context.getString(R.string.the_repeat_password_is_incorrect))
+                }},
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+                .padding(bottom = 12.dp),
+            colors = ButtonDefaults.outlinedButtonColors().copy(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        ) {
             Text(
-                if (isLogin)stringResource(R.string.sign_up) else stringResource(R.string.sign_in),
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-                    .padding(bottom = 80.dp)
-                    .clickable {
-                        isLogin = !isLogin
-                    },
-                fontStyle = FontStyle.Italic)
-
-
+                text = if(isLogin)stringResource(R.string.login) else stringResource(R.string.sign_up),
+                fontSize = 18.sp,
+                color = Color.Black
+            )
         }
 
+        LoginWithProvider(
+            providerName = stringResource(R.string.login_with) +" Google",
+            iconRes = R.drawable.google,
+            onClick = {
+                loginWithGoogle(
+                    firebaseAuth,
+                    context,
+                    scope,
+                    toastManager,
+                    onLoginSuccessful
+                )
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+                .padding(bottom = 16.dp, top = 8.dp)
+        )
+
+        Text(
+            if (isLogin)stringResource(R.string.sign_up) else stringResource(R.string.sign_in),
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+                .padding(bottom = 80.dp)
+                .clickable {
+                    isLogin = !isLogin
+                },
+            fontStyle = FontStyle.Italic)
+
+
+    }
+
+
+}
+
+@Composable
+fun LoginWithProvider(
+    modifier: Modifier = Modifier,
+    providerName:String,
+    @DrawableRes iconRes:Int,
+    onClick:()->Unit
+){
+    OutlinedButton(
+        onClick = onClick,modifier = modifier,
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painterResource(iconRes),
+                contentDescription = null,
+                tint = Color.Unspecified,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(text = providerName)
+        }
     }
 }
+
 
 fun login(
     firebaseAuth: FirebaseAuth,

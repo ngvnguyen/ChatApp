@@ -1,5 +1,8 @@
 package com.sf.chatapp.view.settings
 
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -17,8 +20,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalBottomSheetDefaults
-import androidx.compose.material3.ModalBottomSheetProperties
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,17 +41,20 @@ import androidx.navigation.compose.composable
 import com.google.firebase.auth.FirebaseAuth
 import com.sf.chatapp.R
 import com.sf.chatapp.utils.LocalSession
+import com.sf.chatapp.utils.LocalToastManager
 import com.sf.chatapp.view.Screen
 
 
 fun NavGraphBuilder.settingScreen(
-    navController: NavController
+    navController: NavController,
+    onBackPressed: @Composable ()->Unit
 ){
 
     composable(Screen.Settings.route) {
         SettingScreen(
             navController = navController,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            onBackPressed = onBackPressed
         )
     }
 
@@ -62,8 +68,11 @@ fun NavGraphBuilder.settingScreen(
 @Composable
 fun SettingScreen(
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    onBackPressed: @Composable () -> Unit
 ) {
+    onBackPressed()
+
     val options = SettingOption.entries
     val session = LocalSession.current
     val firebaseAuth = FirebaseAuth.getInstance()
@@ -105,6 +114,7 @@ fun SettingScreen(
 
         items(options.size){index ->
             val option = options[index]
+            var switchAction:(Boolean)->Unit = {}
             val action = when(option){
                 SettingOption.Language->{ {
                     navController.navigate(Screen.LanguagePicker.route)
@@ -115,15 +125,18 @@ fun SettingScreen(
                     session.value = session.value.copy(hasSession = false)
                 }}
 
-                SettingOption.Theme -> {{
+                SettingOption.Theme -> { {
                     showThemeSheet = true
-                }}
+                } }
+
             }
 
 
             SettingItem(
                 option = option,
-                onSelect = action
+                onClick = action,
+                enableClick = option.enableClick,
+                switchAction = switchAction
             )
         }
     }
@@ -141,13 +154,19 @@ fun SettingScreen(
 fun SettingItem(
     modifier: Modifier = Modifier,
     option: SettingOption,
-    onSelect:()->Unit
+    enableClick:Boolean = false,
+    onClick:()->Unit,
+    switchAction:(Boolean)->Unit ={},
+    switchChecked : Boolean = false
 ) {
 
     Column( modifier = modifier) {
         Row(
             modifier = Modifier.fillMaxWidth()
-                .clickable(onClick = onSelect),
+                .then(
+                    if (enableClick) Modifier.clickable(onClick = onClick)
+                        else Modifier
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             option.iconRes?.let { res ->
@@ -187,6 +206,14 @@ fun SettingItem(
                     modifier = Modifier.padding(end = 16.dp)
                 )
             }
+
+            if (option.enableSwitchButton){
+                Switch(
+                    checked = switchChecked,
+                    onCheckedChange = switchAction
+                )
+
+            }
         }
 
         HorizontalDivider(
@@ -205,26 +232,31 @@ sealed class SettingOption(
     @StringRes val description:Int? = null,
     @DrawableRes val iconRes: Int? = null,
     @DrawableRes val navIcon: Int? = null,
-    @StringRes val note:Int? = null
+    @StringRes val note:Int? = null,
+    val enableSwitchButton : Boolean = false,
+    val enableClick: Boolean = false
 ){
 
     data object Language: SettingOption(
         name = R.string.language,
         description = R.string.change_language,
         iconRes = R.drawable.language,
-        navIcon = R.drawable.chevron_right
+        navIcon = R.drawable.chevron_right,
+        enableClick = true
     )
 
     data object Theme:SettingOption(
         name = R.string.theme,
         description = R.string.change_theme,
         iconRes = R.drawable.theme,
-        navIcon = R.drawable.chevron_right
+        navIcon = R.drawable.chevron_right,
+        enableClick = true
     )
 
     data object Logout:SettingOption(
         name = R.string.logout,
         iconRes = R.drawable.logout,
+        enableClick = true
     )
 
 

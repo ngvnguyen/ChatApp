@@ -42,4 +42,9 @@
     <string name="high_dark_contrast">High contrast dark</string>
     <string name="green_light">Green(light)</string>
     <string name="green_dark">Green(dark)</string>
+    <string name="purple_light">Purple(light)</string>
+    <string name="purple_dark">Purple(dark)</string>
+    <string name="background">Background</string>
+    <string name="select_background_for_your_app">Select background for your app</string>
+    <string name="press_back_again_to_exit_app">Press back again to exit app</string>
 </resources>

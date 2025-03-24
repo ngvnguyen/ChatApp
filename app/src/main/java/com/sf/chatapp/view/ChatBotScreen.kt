@@ -64,9 +64,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 import com.sf.chatapp.R
 import com.sf.chatapp.remote.model.Role
 import com.sf.chatapp.utils.LocalToastManager
@@ -111,6 +108,7 @@ fun ChatBotScreen(
 
     DismissibleNavigationDrawer(
         drawerState = drawerState,
+        modifier = Modifier.background(Color.Transparent),
         drawerContent = {
 
 
@@ -180,6 +178,7 @@ fun ChatBotScreen(
 
         Scaffold(
             modifier = modifier,
+            containerColor = Color.Transparent,
             bottomBar = {
                 val ownerBottomPadding = ownerPaddingValues.calculateBottomPadding()
                 val imeBottomPadding = WindowInsets.ime.asPaddingValues().calculateBottomPadding()
@@ -400,21 +399,4 @@ fun BotChatMessageBubble(
 }
 
 
-@Composable
-fun TopAppAds(modifier: Modifier = Modifier, adUnitId:String){
-    AndroidView(
-        modifier = modifier,
-        factory ={context->
-            AdView(context).apply{
-                setAdSize(AdSize.BANNER)
-                setAdUnitId( adUnitId)
-                loadAd(AdRequest.Builder().build())
-            }
-        },
-        update = {adView->
-            adView.loadAd(AdRequest.Builder().build())
-        }
-
-    )
-}
 
